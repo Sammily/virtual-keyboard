@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -9,11 +10,7 @@ module.exports = {
     clean: true,
   },
   mode: "development",
-  plugins: [
-    new HtmlWebpackPlugin({
-      //template: './src/index.html'
-    }),
-  ],
+  
   module: {
     rules: [
       {
@@ -43,4 +40,14 @@ module.exports = {
   resolveLoader: {
     extensions: [".js"],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      //template: './src/index.html'
+    }),
+    new ESLintPlugin({}),
+  ],
+  devServer: {
+    open : true,
+    hot : true,
+  }
 };
