@@ -1,15 +1,25 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
+const { NONAME } = require("dns");
 
-module.exports = {
+const devServer = (isDev) => !isDev ? {} : {
+  devServer: {
+    open: true,
+    hot: true,
+    contentBase: path.join(__dirname),
+  }
+}
+
+module.exports = ({develop}) => ({
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
     clean: true,
   },
-  mode: "development",
+  mode: develop ? "development" : "production",
+  devtool: develop ? "inline-source-map" : false,
   
   module: {
     rules: [
@@ -46,8 +56,5 @@ module.exports = {
     }),
     new ESLintPlugin({}),
   ],
-  devServer: {
-    open : true,
-    hot : true,
-  }
-};
+  ...devServer(develop)
+});

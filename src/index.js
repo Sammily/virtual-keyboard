@@ -1,3 +1,3 @@
 import img from './assets/cat.png';
 
-document.body.innerHTML = `<img src="${img}">`;
+document.body.innerHTML = `<img src='${img}'>`;

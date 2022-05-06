@@ -2,7 +2,7 @@
   "name": "virtual-keyboard",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack serve",
+    "dev": "webpack serve --env development",
     "lint": "eslint src"
   },
   "repository": {
