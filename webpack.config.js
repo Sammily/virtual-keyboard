@@ -1,7 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
-const { NONAME } = require("dns");
 
 const devServer = (isDev) => !isDev ? {} : {
   devServer: {
@@ -10,6 +9,7 @@ const devServer = (isDev) => !isDev ? {} : {
     contentBase: path.join(__dirname),
   }
 }
+const esLintplugin = (isDev) => isDev ? [] : [new ESLintPlugin({ extensions: ['js']}),]
 
 module.exports = ({develop}) => ({
   entry: "./src/index.js",
@@ -23,10 +23,6 @@ module.exports = ({develop}) => ({
   
   module: {
     rules: [
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
       {
         test: /\.s[ac]ss$/i,
         use: ["style-loader", "css-loader", "sass-loader"],
@@ -54,7 +50,7 @@ module.exports = ({develop}) => ({
     new HtmlWebpackPlugin({
       //template: './src/index.html'
     }),
-    new ESLintPlugin({}),
+    ...esLintplugin(develop),
   ],
   ...devServer(develop)
 });
