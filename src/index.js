@@ -2,10 +2,12 @@ import './style.scss';
 
 let capsLockFlag = false;
 let langRuFlag = false;
-
+if (localStorage.getItem('lang') === 'ru') {
+  langRuFlag = true;
+}
 const arr = ['Backspace', 'Tab', 'Del', 'Caps Lock', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'Space', 'Alt2', 'ContextMenu', 'Control2', 'Shift2', '⯅', '⯇', '⯆', '⯈'];
 const str = '`1234567890-=qwertyuiop[]\\asdfghjkl;\'zxcvbnm,./';
-const str2 = 'ё1234567890=-йцукенгшщзхъфывапролджэ\\ячсмитьбю.';
+const str2 = 'ё1234567890-=йцукенгшщзхъфывапролджэ\\ячсмитьбю.';
 
 const row1 = [];
 const row2 = [];
@@ -82,7 +84,6 @@ function clickKey(key) {
       textarea.value += key;
     } else { textarea.value += ''; }
   }
-
   if (key === 'Space') {
     textarea.value += ' ';
   }
@@ -96,6 +97,19 @@ function clickKey(key) {
     textarea.value += '\n';
   }
   textarea.blur();
+}
+
+function hideKeys() {
+  const keys = document.querySelectorAll('span');
+  for (let i = 0; i < keys.length; i += 1) {
+    if (keys[i].classList.contains('hide')) {
+      keys[i].classList.remove('hide');
+      keys[i].classList.add('active');
+    } else {
+      keys[i].classList.remove('active');
+      keys[i].classList.add('hide');
+    }
+  }
 }
 
 function addButton(key, rowNum) {
@@ -181,6 +195,19 @@ function addButton(key, rowNum) {
   });
   btn.addEventListener('mouseup', () => { if (key[0] !== 'Caps Lock') { btn.classList.remove('colored'); } });
   rowNum.append(btn);
+  if (langRuFlag === true) {
+    const keys = document.querySelectorAll('span');
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i].classList.contains('ru')) {
+        keys[i].classList.remove('hide');
+        keys[i].classList.add('active');
+      }
+      if (keys[i].classList.contains('en')) {
+        keys[i].classList.remove('active');
+        keys[i].classList.add('hide');
+      }
+    }
+  }
 }
 
 function appendRows() {
@@ -211,19 +238,6 @@ function appendRows() {
 }
 
 appendRows();
-
-function hideKeys() {
-  const keys = document.querySelectorAll('span');
-  for (let i = 0; i < keys.length; i += 1) {
-    if (keys[i].classList.contains('hide')) {
-      keys[i].classList.remove('hide');
-      keys[i].classList.add('active');
-    } else {
-      keys[i].classList.remove('active');
-      keys[i].classList.add('hide');
-    }
-  }
-}
 
 function pressKey(event) {
   const spans = document.querySelectorAll('span');
@@ -304,6 +318,9 @@ function pressKey(event) {
       langRuFlag = !langRuFlag;
       hideKeys();
     }
+    if (langRuFlag === true) {
+      localStorage.setItem('lang', 'ru');
+    } else { localStorage.setItem('lang', 'en'); }
   }
   textarea.blur();
 }
