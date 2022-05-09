@@ -351,7 +351,6 @@ document.addEventListener('keydown', (event) => {
   pressKey(event);
 });
 document.addEventListener('keyup', (event) => {
-  console.log(textarea.value);
   buttons.forEach((b) => { if (event.key.toLowerCase() === b.innerText) { b.parentElement.classList.remove('colored'); } });
   if (event.key === 'Meta') { document.getElementById('win').classList.remove('colored'); }
   if (event.key === 'ContextMenu') { document.getElementById('win2').classList.remove('colored'); }
