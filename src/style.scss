@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 20px 0;
 }
 
 .row {
@@ -9,7 +10,8 @@
 }
 
 .btnstl {
-    padding: 10px 15px;
+    min-width: 50px;
+    min-height: 50px;
     font-size: 20px;
     margin: 3px;
 }
@@ -17,16 +19,25 @@
 .keyboard {
     background-color: lightblue;
     max-width: 900px;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 #space {
-    padding: 10px 150px;
+    padding: 10px 158px;
+}
+
+#enter,
+#shift2 {
+    min-width: 90px;
 }
 
 .textarea {
-    width: 700px;
+    width: 800px;
     height: 200px;
-    margin-bottom: 10px;
+    margin: 20px 0;
 }
 
 .hide {
@@ -39,4 +50,6 @@
 
 .colored {
     background-color: lightgreen;
+    border-radius: 20px;
+    transition: border-radius 0.2s;
 }

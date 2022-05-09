@@ -3,7 +3,7 @@ import './style.scss';
 let capsLockFlag = false;
 let langRuFlag = false;
 
-const arr = ['Backspace', 'Tab', 'Del', 'Caps Lock', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'Space', 'Alt2', 'ContextMenu', 'Control2'];
+const arr = ['Backspace', 'Tab', 'Del', 'Caps Lock', 'Enter', 'Shift', 'Control', 'Alt', 'Meta', 'Space', 'Alt2', 'ContextMenu', 'Control2', 'Shift2', '⯅', '⯇', '⯆', '⯈'];
 const str = '`1234567890-=qwertyuiop[]\\asdfghjkl;\'zxcvbnm,./';
 const str2 = 'ё1234567890=-йцукенгшщзхъфывапролджэ\\ячсмитьбю.';
 
@@ -27,7 +27,6 @@ function createRows() {
     row2.push([row[i], rowRu[i]]);
   }
   row2.unshift([arr[1], arr[1]]);
-  row2.push([arr[2], arr[2]]);
 
   row = str.substring(26, 37).split('');
   rowRu = str2.substring(26, 37).split('');
@@ -43,17 +42,19 @@ function createRows() {
     row4.push([row[i], rowRu[i]]);
   }
   row4.unshift([arr[5], arr[5]]);
-  row4.push([arr[5], arr[5]]);
+  row4.push([arr[13], arr[13]]);
+  row4.push([arr[14], arr[14]]);
 
   row5.push([arr[6], arr[6]], [arr[8], arr[8]], [arr[7], arr[7]], [arr[9], arr[9]]);
   row5.push([arr[10], arr[10]], [arr[11], arr[11]], [arr[12], arr[12]]);
+  row5.push([arr[15], arr[15]], [arr[16], arr[16]], [arr[17], arr[17]]);
 }
 
 createRows();
 
 const container = document.createElement('div');
 container.classList.add('container');
-container.innerHTML = '<div>KEYBOARD (Windows, Изменить раскладку - Shift + Alt)</div>';
+container.innerHTML = '<div>KEYBOARD (Windows, Изменить раскладку - Ctrl + Alt)</div>';
 document.body.append(container);
 
 const textarea = document.createElement('textarea');
@@ -66,21 +67,20 @@ keyboard.classList.add('keyboard');
 container.append(keyboard);
 
 function clickKey(key) {
-  console.log(key);
   textarea.focus();
   if (key === 'Caps Lock') {
     capsLockFlag = !capsLockFlag;
   }
 
   if (capsLockFlag) {
-    if (key !== 'Backspace' && key !== 'Enter' && key !== 'Shift' && key !== 'Alt' && key !== 'Caps Lock' && key !== 'Ctrl' && key !== 'Win' && key !== 'Space' && key !== 'Tab' && key !== 'Del') {
+    if (key !== 'Backspace' && key !== 'Enter' && key !== 'Shift' && key !== 'Alt' && key !== 'Caps Lock' && key !== 'Ctrl' && key !== 'Win' && key !== 'Space' && key !== 'Tab' && key !== 'Control' && key !== 'Meta' && key !== 'Alt2' && key !== 'ContextMenu' && key !== 'Control2' && key !== 'Shift2') {
       textarea.value += key.toUpperCase();
-    }
+    } else { textarea.value += ''; }
   }
   if (capsLockFlag === false) {
-    if (key !== 'Backspace' && key !== 'Enter' && key !== 'Shift' && key !== 'Alt' && key !== 'Caps Lock' && key !== 'Ctrl' && key !== 'Win' && key !== 'Space' && key !== 'Tab' && key !== 'Del') {
+    if (key !== 'Backspace' && key !== 'Enter' && key !== 'Shift' && key !== 'Alt' && key !== 'Caps Lock' && key !== 'Ctrl' && key !== 'Win' && key !== 'Space' && key !== 'Tab' && key !== 'Control' && key !== 'Meta' && key !== 'Alt2' && key !== 'ContextMenu' && key !== 'Control2' && key !== 'Shift2') {
       textarea.value += key;
-    }
+    } else { textarea.value += ''; }
   }
 
   if (key === 'Space') {
@@ -91,17 +91,6 @@ function clickKey(key) {
   }
   if (key === 'Tab') {
     textarea.value += '  ';
-  }
-  if (key === 'Del') {
-    textarea.focus();
-    const start = textarea.selectionStart;
-    const strLength = textarea.value.length;
-    const val = textarea.value;
-    if (val.length > start) {
-      textarea.value = val.substring(0, start) + val.substring(start, strLength - 1);
-    }
-    textarea.selectionStart = start;
-    textarea.selectionEnd = start;
   }
   if (key === 'Enter') {
     textarea.value += '\n';
@@ -149,9 +138,41 @@ function addButton(key, rowNum) {
     btn.innerHTML = `<span class="en active">${'Alt'}</span>`;
     btn.innerHTML += `<span class="ru hide">${'Alt'}</span>`;
   }
+  if (key[0] === 'Shift' || key[1] === 'Shift') {
+    btn.id = 'shift';
+    btn.innerHTML = `<span class="en active">${'Shift'}</span>`;
+    btn.innerHTML += `<span class="ru hide">${'Shift'}</span>`;
+  }
+  if (key[0] === 'Shift2' || key[1] === 'Shift2') {
+    btn.id = 'shift2';
+    btn.innerHTML = `<span class="en active">${'Shift'}</span>`;
+    btn.innerHTML += `<span class="ru hide">${'Shift'}</span>`;
+  }
   if (key[0] === 'Caps Lock' || key[1] === 'Caps Lock') {
     btn.id = 'caps';
   }
+  if (key[0] === 'Enter' || key[1] === 'Enter') {
+    btn.id = 'enter';
+  }
+  if (key[0] === 'Tab' || key[1] === 'Tab') {
+    btn.id = 'tab';
+  }
+  if (key[0] === 'Backspace' || key[1] === 'Backspace') {
+    btn.id = 'back';
+  }
+  if (key[0] === '⯅' || key[1] === '⯅') {
+    btn.id = 'up';
+  }
+  if (key[0] === '⯇' || key[1] === '⯇') {
+    btn.id = 'left';
+  }
+  if (key[0] === '⯆' || key[1] === '⯆') {
+    btn.id = 'down';
+  }
+  if (key[0] === '⯈' || key[1] === '⯈') {
+    btn.id = 'right';
+  }
+
   btn.addEventListener('click', () => { if (!langRuFlag) { clickKey(key[0]); } else { clickKey(key[1]); } });
   btn.addEventListener('mousedown', () => {
     if (key[0] === 'Caps Lock' && capsLockFlag === true) { btn.classList.remove('colored'); }
@@ -205,15 +226,45 @@ function hideKeys() {
 }
 
 function pressKey(event) {
-  textarea.focus();
-  console.log(event.key);
-  console.log(event.code);
+  const spans = document.querySelectorAll('span');
+  let cur = '';
+  spans.forEach((b) => {
+    if (event.key.toLowerCase() === b.innerText) {
+      if (langRuFlag) { cur = b.nextSibling; } else { cur = b; }
+    }
+  });
   if (event.key === 'CapsLock') {
     capsLockFlag = !capsLockFlag;
   }
   if (capsLockFlag) {
-    if (event.key !== 'Backspace' && event.key !== 'Enter' && event.key !== 'Shift' && event.key !== 'Alt' && event.key !== 'CapsLock') {
-      textarea.value += event.key.toUpperCase();
+    if (event.code !== 'Space' && event.key !== 'Backspace' && event.key !== 'Enter' && event.key !== 'Shift' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Control' && event.key !== 'Tab' && event.key !== 'Delete' && event.key !== 'Meta' && event.key !== 'ContextMenu' && event.key !== 'ArrowUp' && event.key !== 'ArrowLeft' && event.key !== 'ArrowDown' && event.key !== 'ArrowRight') {
+      textarea.value += cur.innerText.toUpperCase();
+    } else { textarea.value += ''; }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      if (event.key === 'ArrowUp') {
+        textarea.value += '⯅';
+      }
+      if (event.key === 'ArrowLeft') {
+        textarea.value += '⯇';
+      }
+      if (event.key === 'ArrowDown') {
+        textarea.value += '⯆';
+      }
+      if (event.key === 'ArrowRight') {
+        textarea.value += '⯈';
+      }
+    }
+    if (event.key === 'Backspace') {
+      textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+    }
+    if (event.key === 'Enter') {
+      textarea.value += '\n';
+    }
+    if (event.key === 'Tab') {
+      textarea.value += '  ';
+    }
+    if (event.code === 'Space') {
+      textarea.value += ' ';
     }
   } else {
     if (event.key === 'Backspace') {
@@ -222,14 +273,34 @@ function pressKey(event) {
     if (event.key === 'Enter') {
       textarea.value += '\n';
     }
-    if (event.key !== 'Backspace' && event.key !== 'Enter' && event.key !== 'Shift' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Control' && event.key !== 'Tab' && event.key !== 'Delete') {
-      textarea.value += event.key;
+    if (event.code !== 'Space' && event.key !== 'Backspace' && event.key !== 'Enter' && event.key !== 'Shift' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Control' && event.key !== 'Tab' && event.key !== 'Delete' && event.key !== 'Meta' && event.key !== 'ContextMenu' && event.key !== 'ArrowUp' && event.key !== 'ArrowLeft' && event.key !== 'ArrowDown' && event.key !== 'ArrowRight') {
+      textarea.value += cur.innerText;
+    } else { textarea.value += ''; }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      if (event.key === 'ArrowUp') {
+        textarea.value += '⯅';
+      }
+      if (event.key === 'ArrowLeft') {
+        textarea.value += '⯇';
+      }
+      if (event.key === 'ArrowDown') {
+        textarea.value += '⯆';
+      }
+      if (event.key === 'ArrowRight') {
+        textarea.value += '⯈';
+      }
     }
-    if (event.altKey && event.key === 'Shift') {
+    if (event.key === 'Tab') {
+      textarea.value += '  ';
+    }
+    if (event.code === 'Space') {
+      textarea.value += ' ';
+    }
+    if (event.altKey && event.key === 'Control') {
       langRuFlag = !langRuFlag;
       hideKeys();
     }
-    if (event.key === 'Alt' && event.shiftKey) {
+    if (event.key === 'Alt' && event.ctrlKey) {
       langRuFlag = !langRuFlag;
       hideKeys();
     }
@@ -240,17 +311,45 @@ const buttons = document.querySelectorAll('span');
 const caps = document.getElementById('caps');
 document.addEventListener('keydown', (event) => {
   buttons.forEach((b) => {
-    if (event.key === b.innerText) { b.parentElement.classList.add('colored'); }
+    if (event.key.toLowerCase() === b.innerText) { b.parentElement.classList.add('colored'); }
   });
   if (event.key === 'CapsLock' && capsLockFlag === true) { caps.classList.remove('colored'); }
   if (event.key === 'CapsLock' && capsLockFlag === false) { caps.classList.add('colored'); }
   if (event.key === 'Meta') { document.getElementById('win').classList.add('colored'); }
   if (event.key === 'ContextMenu') { document.getElementById('win2').classList.add('colored'); }
+  if (event.code === 'ControlLeft') { document.getElementById('ctrl').classList.add('colored'); }
+  if (event.code === 'ControlRight') { document.getElementById('ctrl2').classList.add('colored'); }
+  if (event.code === 'AltLeft') { event.preventDefault(); document.getElementById('alt').classList.add('colored'); }
+  if (event.code === 'AltRight') { event.preventDefault(); document.getElementById('alt2').classList.add('colored'); }
+  if (event.code === 'ShiftLeft') { document.getElementById('shift').classList.add('colored'); }
+  if (event.code === 'ShiftRight') { document.getElementById('shift2').classList.add('colored'); }
+  if (event.code === 'Tab') { event.preventDefault(); document.getElementById('tab').classList.add('colored'); }
+  if (event.code === 'Enter') { document.getElementById('enter').classList.add('colored'); }
+  if (event.code === 'Backspace') { document.getElementById('back').classList.add('colored'); }
+  if (event.code === 'Space') { document.getElementById('space').classList.add('colored'); }
+  if (event.key === 'ArrowUp') { document.getElementById('up').classList.add('colored'); }
+  if (event.key === 'ArrowLeft') { document.getElementById('left').classList.add('colored'); }
+  if (event.key === 'ArrowDown') { document.getElementById('down').classList.add('colored'); }
+  if (event.key === 'ArrowRight') { document.getElementById('right').classList.add('colored'); }
   pressKey(event);
 });
 document.addEventListener('keyup', (event) => {
-  buttons.forEach((b) => { if (event.key === b.innerText) { b.parentElement.classList.remove('colored'); } });
+  console.log(textarea.value);
+  buttons.forEach((b) => { if (event.key.toLowerCase() === b.innerText) { b.parentElement.classList.remove('colored'); } });
   if (event.key === 'Meta') { document.getElementById('win').classList.remove('colored'); }
   if (event.key === 'ContextMenu') { document.getElementById('win2').classList.remove('colored'); }
+  if (event.code === 'ControlLeft') { document.getElementById('ctrl').classList.remove('colored'); }
+  if (event.code === 'ControlRight') { document.getElementById('ctrl2').classList.remove('colored'); }
+  if (event.code === 'AltLeft') { document.getElementById('alt').classList.remove('colored'); }
+  if (event.code === 'AltRight') { document.getElementById('alt2').classList.remove('colored'); }
+  if (event.code === 'ShiftLeft') { document.getElementById('shift').classList.remove('colored'); }
+  if (event.code === 'ShiftRight') { document.getElementById('shift2').classList.remove('colored'); }
+  if (event.code === 'Tab') { document.getElementById('tab').classList.remove('colored'); }
+  if (event.code === 'Enter') { document.getElementById('enter').classList.remove('colored'); }
+  if (event.code === 'Backspace') { document.getElementById('back').classList.remove('colored'); }
+  if (event.code === 'Space') { document.getElementById('space').classList.remove('colored'); }
+  if (event.key === 'ArrowUp') { document.getElementById('up').classList.remove('colored'); }
+  if (event.key === 'ArrowLeft') { document.getElementById('left').classList.remove('colored'); }
+  if (event.key === 'ArrowDown') { document.getElementById('down').classList.remove('colored'); }
+  if (event.key === 'ArrowRight') { document.getElementById('right').classList.remove('colored'); }
 });
-// document.addEventListener('keydown', (event) => { pressKey(event); });
